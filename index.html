@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nishant Pushparaju</title>
+  <meta name="description" content="Perception and robotics systems engineer. MS Robotics, NYU Tandon, 2026. From-scratch C++ pipelines and Bell Labs–sponsored research under peer review. Available July 2026.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nishantpushparaju.dev/">
+  <meta property="og:title" content="Nishant Pushparaju — Perception &amp; Robotics Systems Engineer">
+  <meta property="og:description" content="Perception and robotics systems engineer. From-scratch C++ pipelines and Bell Labs–sponsored research under peer review. Available July 2026.">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Nishant Pushparaju — Perception &amp; Robotics Systems Engineer">
+  <meta name="twitter:description" content="Perception and robotics systems engineer. From-scratch C++ pipelines and Bell Labs–sponsored research under peer review.">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230a0a0a'/%3E%3Ctext x='50' y='66' text-anchor='middle' font-family='Inter,sans-serif' font-size='52' font-weight='500' fill='%237DD3FC'%3EN%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0A0A;
+      --bg-elev: #111114;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.18);
+      --text: #EDEDED;
+      --text-mut: #A1A1A1;
+      --text-dim: #6E6E6E;
+      --accent: #7DD3FC;
+      --accent-hover: #BAE6FD;
+
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+      --container: 720px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      min-height: 100vh;
+    }
+
+    /* ---------- Layout ---------- */
+    .wrap {
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    main { padding: 56px 0 96px; }
+
+    section { margin-top: 64px; }
+    section:first-child { margin-top: 0; }
+
+    @media (max-width: 640px) {
+      main { padding: 40px 0 64px; }
+      section { margin-top: 48px; }
+    }
+
+    /* ---------- Typography ---------- */
+    h1, h2, h3 {
+      font-family: var(--font-sans);
+      font-weight: 500;
+      letter-spacing: -0.025em;
+      color: var(--text);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 2.625rem);
+      letter-spacing: -0.04em;
+      font-weight: 600;
+      line-height: 1.1;
+    }
+
+    h2 {
+      font-size: 0.78rem;
+      font-family: var(--font-mono);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-size: 1.0625rem;
+      font-weight: 500;
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+
+    p { color: var(--text-mut); }
+
+    a {
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: color 150ms ease, border-color 150ms ease;
+    }
+    a:hover { color: var(--accent-hover); }
+
+    /* Inline prose links underlined */
+    .prose a {
+      color: var(--text);
+      border-bottom: 1px solid var(--text-dim);
+    }
+    .prose a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    code, .mono {
+      font-family: var(--font-mono);
+      font-size: 0.86em;
+      color: var(--text);
+    }
+
+    /* ---------- Header / Hero ---------- */
+    header { margin-bottom: 56px; }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.02em;
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-mut);
+    }
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      box-shadow: 0 0 6px rgba(74, 222, 128, 0.6);
+    }
+
+    .hero-tagline {
+      color: var(--text-mut);
+      font-size: 1.0625rem;
+      margin-top: 14px;
+      line-height: 1.55;
+      max-width: 560px;
+    }
+    .hero-tagline a {
+      color: var(--accent);
+      border-bottom: 1px solid var(--accent);
+    }
+    .hero-tagline a:hover {
+      color: var(--accent-hover);
+      border-bottom-color: var(--accent-hover);
+    }
+
+    .hero-meta {
+      margin-top: 22px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.02em;
+    }
+    .hero-meta .sep { color: rgba(255,255,255,0.15); margin: 0 0.5rem; }
+
+    .hero-links {
+      margin-top: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 20px;
+      font-family: var(--font-mono);
+      font-size: 0.84rem;
+    }
+    .hero-links a {
+      color: var(--text-mut);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1px;
+    }
+    .hero-links a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ---------- About / prose blocks ---------- */
+    .prose p {
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+    .prose p:last-child { margin-bottom: 0; }
+    .prose em { color: var(--accent); font-style: normal; }
+
+    /* ---------- Project entries ---------- */
+    .project {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .project:last-child { border-bottom: none; padding-bottom: 0; }
+    .project:first-child { padding-top: 0; }
+
+    .project-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+    .project-title a {
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+    .project-title a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .project-title .arrow {
+      display: inline-block;
+      transition: transform 180ms ease;
+      margin-left: 2px;
+      color: var(--text-dim);
+    }
+    .project-title a:hover .arrow {
+      transform: translate(2px, -2px);
+      color: var(--accent);
+    }
+    .project-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .project-label.active { color: var(--accent); }
+
+    .project-desc {
+      color: var(--text-mut);
+      font-size: 0.96rem;
+      line-height: 1.6;
+      margin: 10px 0 14px;
+    }
+
+    .project-result {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      margin-bottom: 12px;
+    }
+    .project-result .result-label {
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.72rem;
+      margin-right: 8px;
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+    }
+    .project-links a {
+      color: var(--text-mut);
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .project-links a:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .project-links a .arrow { transition: transform 180ms ease; }
+    .project-links a:hover .arrow { transform: translate(2px, -2px); }
+
+    /* ---------- Publications / Open source ---------- */
+    .pub {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .pub:last-child { border-bottom: none; padding-bottom: 0; }
+    .pub:first-child { padding-top: 0; }
+    .pub-title { font-size: 1rem; font-weight: 500; margin-bottom: 6px; line-height: 1.4; }
+    .pub-meta {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-dim);
+      letter-spacing: 0.02em;
+      margin-bottom: 8px;
+    }
+    .pub-meta .accent { color: var(--accent); }
+    .pub-desc {
+      color: var(--text-mut);
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+    }
+
+    /* ---------- Stack ---------- */
+    #stack .prose p {
+      color: var(--text-mut);
+      font-size: 0.96rem;
+    }
+    #stack code {
+      background: var(--bg-elev);
+      padding: 1px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      font-size: 0.82em;
+      color: var(--text);
+    }
+
+    /* ---------- Timeline ---------- */
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 24px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .timeline-row:last-child { border-bottom: none; }
+    .timeline-date {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      padding-top: 2px;
+    }
+    .timeline-content h3 { font-size: 1rem; margin-bottom: 6px; }
+    .timeline-content p {
+      color: var(--text-mut);
+      font-size: 0.94rem;
+      line-height: 1.6;
+    }
+    @media (max-width: 540px) {
+      .timeline-row { grid-template-columns: 1fr; gap: 4px; }
+      .timeline-date { padding-top: 0; }
+    }
+
+    /* ---------- Footer ---------- */
+    footer {
+      margin-top: 64px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-dim);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ---------- Selection / focus ---------- */
+    ::selection {
+      background: var(--accent);
+      color: var(--bg);
+    }
+    a:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+  <main>
+
+    <!-- HEADER / HERO -->
+    <header>
+      <div class="header-top">
+        <span>nishantpushparaju.dev</span>
+        <span class="status">
+          <span class="status-dot"></span>
+          Available July 2026
+        </span>
+      </div>
+
+      <h1>Nishant Pushparaju</h1>
+
+      <p class="hero-tagline">
+        I&rsquo;m a perception and robotics systems engineer. I build production C&#x202F;+&#x202F;+ pipelines, ship research under peer review at <a href="https://arxiv.org/abs/2603.28890">IEEE&nbsp;CASE&nbsp;2026 / RA-L</a>, and deploy across six compute platforms from Parallax Propeller written from datasheets to a 4096-environment Isaac Lab cluster.
+      </p>
+
+      <div class="hero-meta">
+        MS Robotics, NYU Tandon, 2026
+        <span class="sep">&middot;</span>
+        New York, NY
+        <span class="sep">&middot;</span>
+        F-1 + 3-year STEM OPT
+      </div>
+
+      <div class="hero-links">
+        <a href="mailto:nishantpushparaju@gmail.com">email</a>
+        <a href="https://github.com/Nishant-ZFYII" target="_blank" rel="noopener">github</a>
+        <a href="https://www.linkedin.com/in/nishant-pushparaju-857695188/" target="_blank" rel="noopener">linkedin</a>
+        <a href="https://arxiv.org/abs/2603.28890" target="_blank" rel="noopener">arxiv</a>
+      </div>
+    </header>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About</h2>
+      <div class="prose">
+        <p>
+          I build perception systems from first principles. My production C&#x202F;+&#x202F;+ pipeline <em>terra-perceive</em> implements sector RANSAC ground segmentation, from-scratch LiDAR-inertial SLAM, and a 1D control barrier function safety supervisor &mdash; with Eigen3 alone, no OpenCV or PCL in the math layer. 162 C&#x202F;+&#x202F;+ tests and 31 Python tests pass on <code>main</code>; one <code>docker&nbsp;run</code> produces a BEV map and safety event log in 45&nbsp;seconds.
+        </p>
+        <p>
+          I ship the system, not the demo. My arXiv preprint draws on data I collected on a Bell&nbsp;Labs&ndash;sponsored Ackermann RC platform I built. It characterizes a 78&nbsp;% time-of-flight depth dropout empirically rather than synthetically. The distilled student runs at 218&nbsp;FPS on a Jetson Orin Nano and recovers 55&ndash;110&nbsp;% more occupied costmap cells than LiDAR alone.
+        </p>
+        <p>
+          I characterize failure honestly. The ml_inference README documents the FPR audit naming the breakdown of the 5.2&nbsp;% false-positive rate &mdash; 49.3&nbsp;% genuine hallucinations, 34.6&nbsp;% legitimate sensor-invalid fill, 18.1&nbsp;% inflation artifacts &mdash; alongside a &ldquo;Limitations and disclosures&rdquo; section. That instinct is also why I build the math from scratch: every algorithm is debuggable at the line level.
+        </p>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECTS -->
+    <section id="featured">
+      <h2>Featured Work</h2>
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">
+            <a href="https://nishant-zfyii.github.io/terra-perceive/" target="_blank" rel="noopener">
+              terra-perceive <span class="arrow">&rarr; docs site</span>
+            </a>
+          </h3>
+          <span class="project-label">Production C&#x202F;+&#x202F;+ pipeline</span>
+        </div>
+        <p class="project-desc">
+          A from-scratch C&#x202F;+&#x202F;+17 perception pipeline for off-road autonomy on the RELLIS-3D dataset. I implemented sector-based RANSAC ground segmentation that handles graded terrain where global RANSAC fails, a PCA-based traversability grid with explicit risk and confidence separation, camera-LiDAR projection with SegFormer semantic fusion, and a from-scratch LiDAR-inertial SLAM backend with SO(3) Lie groups, IMU preintegration, and Scan Context loop closure. Benchmarked against Google Cartographer.
+        </p>
+        <div class="project-result">
+          <span class="result-label">Headline</span>0.577 m ATE on RELLIS-3D Seq&nbsp;00 &middot; 162 C&#x202F;+&#x202F;+ tests passing &middot; 45 s Docker smoke-test
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Nishant-ZFYII/terra-perceive" target="_blank" rel="noopener">repo<span class="arrow">&nearr;</span></a>
+          <a href="https://nishant-zfyii.github.io/terra-perceive/" target="_blank" rel="noopener">blog<span class="arrow">&nearr;</span></a>
+          <a href="https://hub.docker.com/r/nishantzfyii/terra-perceive" target="_blank" rel="noopener">docker<span class="arrow">&nearr;</span></a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">
+            <a href="https://arxiv.org/abs/2603.28890" target="_blank" rel="noopener">
+              Bootstrap Perception <span class="arrow">&rarr; arXiv</span>
+            </a>
+          </h3>
+          <span class="project-label active">First-author preprint &middot; Under review</span>
+        </div>
+        <p class="project-desc">
+          A self-referential perception architecture for indoor navigation. Time-of-flight cameras lose up to 78&nbsp;% of depth pixels on reflective surfaces; in this work, the surviving valid pixels calibrate a learned monocular depth estimator to metric scale at runtime, so the sensor fills its own gaps without external data. LiDAR remains the anchor, hardware depth is preserved where valid, learned depth enters only where needed. Knowledge distillation from DA3-Large teacher to a 5.31&nbsp;M-parameter EfficientViT-B1 student. Under peer review at IEEE&nbsp;CASE&nbsp;2026 and IEEE Robotics &amp; Automation Letters.
+        </p>
+        <div class="project-result">
+          <span class="result-label">Headline</span>218&nbsp;FPS on Jetson Orin Nano &middot; 55&ndash;110&nbsp;% costmap recovery &middot; 9/10 closed-loop sim success
+        </div>
+        <div class="project-links">
+          <a href="https://arxiv.org/abs/2603.28890" target="_blank" rel="noopener">paper<span class="arrow">&nearr;</span></a>
+          <a href="https://github.com/Nishant-ZFYII/ml_inference" target="_blank" rel="noopener">repo<span class="arrow">&nearr;</span></a>
+          <a href="https://nishant-zfyii.github.io/ml_inference/" target="_blank" rel="noopener">blog<span class="arrow">&nearr;</span></a>
+          <a href="https://huggingface.co/collections/NishantPushparaju/bootstrap-perception-monocular-depth-models" target="_blank" rel="noopener">models<span class="arrow">&nearr;</span></a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">
+            <a href="https://github.com/Nishant-ZFYII/NCHSB" target="_blank" rel="noopener">
+              NCHSB &mdash; Ackermann RC Platform <span class="arrow">&rarr; repo</span>
+            </a>
+          </h3>
+          <span class="project-label active">Bell Labs&ndash;sponsored</span>
+        </div>
+        <p class="project-desc">
+          The hardware platform behind the data behind the paper. I built a modified Traxxas Maxx 4S 1/10-scale Ackermann RC car for narrow indoor corridor navigation, designed for 30 m/s and validated in Gazebo Fortress to 25 m/s. Custom Nav2 GlobalPlanner C&#x202F;+&#x202F;+ plugin. F1-style racing-line optimizer in CVXPY that maximizes corner-exit speed via outside-inside-outside apex geometry. SLAM Toolbox and MPPI controller tuned specifically for Ackermann kinematics, not the differential-drive defaults that ship with Nav2. Camera-LiDAR sensor fusion via HSV segmentation, Farneback optical flow, ego-motion compensation, and 15-frame temporal voting.
+        </p>
+        <div class="project-result">
+          <span class="result-label">Headline</span>2000 MPPI trajectories &middot; 50 Hz EKF sensor fusion &middot; Bell Labs &times; NYU MS project
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Nishant-ZFYII/NCHSB" target="_blank" rel="noopener">repo<span class="arrow">&nearr;</span></a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">
+            <a href="https://youtu.be/irx46ugvJ00" target="_blank" rel="noopener">
+              Cloud-Burst HPC + SDXL Inference <span class="arrow">&rarr; talk</span>
+            </a>
+          </h3>
+          <span class="project-label active">AWS ParallelCluster &middot; NYU IT RTS</span>
+        </div>
+        <p class="project-desc">
+          I co-architected NYU&rsquo;s AWS cloud-burst HPC cluster, then deployed a personal SDXL Turbo image-generation pipeline on top of it &mdash; and used the same cluster to train the Go2 walking policy. The build-and-use arc is the differentiator. AWS ParallelCluster with CloudFormation IaC, persistent head node, ephemeral GPU compute nodes auto-scaling 0&rarr;20 instances on Slurm queue demand, 10-minute idle timeout for cost control. FSx for Lustre at <code>/work</code> for shared project data. Apptainer/Singularity rather than Docker because HPC compute nodes don&rsquo;t run Docker daemons. SDXL pipeline: personal website trigger &rarr; Cloudflare Tunnel &rarr; AWS GPU node &rarr; SDXL Turbo inference &rarr; image returned. Mentored by Shenglong Wang (NYU researcher and HPC engineer) and Stratos Efstathiadis (Senior Director, NYU IT RTS).
+        </p>
+        <div class="project-result">
+          <span class="result-label">Headline</span>0&rarr;20 GPU instance auto-scale &middot; 6 min cold start / 2 min warm inference &middot; same cluster trained the Go2 RL policy
+        </div>
+        <div class="project-links">
+          <a href="https://youtu.be/irx46ugvJ00" target="_blank" rel="noopener">talk<span class="arrow">&nearr;</span></a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">
+            <a href="https://github.com/aojedao/AdvancedMechatronics" target="_blank" rel="noopener">
+              Heterogeneous 3-Robot Swarm <span class="arrow">&rarr; team repo</span>
+            </a>
+          </h3>
+          <span class="project-label active">Multi-platform firmware &middot; ChoiRbot</span>
+        </div>
+        <p class="project-desc">
+          I wrote the Parallax Propeller multi-cog C firmware from datasheets &mdash; existing community resources did not cover the MPU-6050 + quadrature encoder + ESP32 UART integration we needed on Propeller, so the firmware went straight from datasheet to working code with no intermediate tutorial. Beyond that, I owned the layered software architecture across the heterogeneous platform: ArUco vision-based localization (DICT_7X7_250, solvePnP, Rodrigues-to-quaternion), the BLE bridge from ROS&nbsp;2 Twist to GATT writes via bleak/asyncio, and the Pandebono Arduino firmware. Sim-to-real engineering insight from this project: a clean Lyapunov controller that worked in Gazebo failed in real-world deployment due to motor friction and unmodeled dynamics &mdash; documented the failure mode and retuned to a PID for the velocity command. Textbook sim-to-real gap, observed and resolved.
+        </p>
+        <div class="project-result">
+          <span class="result-label">Headline</span>Propeller multi-cog C from datasheets &middot; 0.31&nbsp;% position error on Propeller EKF &middot; 6 compute platforms in one stack
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/aojedao/AdvancedMechatronics" target="_blank" rel="noopener">team repo<span class="arrow">&nearr;</span></a>
+        </div>
+      </article>
+    </section>
+
+    <!-- OTHER PROJECTS -->
+    <section id="projects">
+      <h2>Other Projects</h2>
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">
+            <a href="https://github.com/Nishant-ZFYII/vis_nav_AI4CE" target="_blank" rel="noopener">
+              Visual Navigation Pipeline <span class="arrow">&rarr; repo</span>
+            </a>
+          </h3>
+          <span class="project-label">Final project &middot; Robot Perception</span>
+        </div>
+        <p class="project-desc">
+          I factored a hard metric navigation problem into a topological one. CosPlace ResNet-18 descriptors give fast top-K recall over the database; SuperPoint + SuperGlue verifies each candidate with essential-matrix inlier count. Both used for what each is good at. Deployed on the Frodobots remote-rover platform. My project partner refactored the joint codebase into the production basis for his EarthRover Challenge competition entry.
+        </p>
+        <div class="project-result">
+          <span class="result-label">Headline</span>4-stage SLAM pipeline &middot; deployed on Frodobots &middot; video documented
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Nishant-ZFYII/vis_nav_AI4CE" target="_blank" rel="noopener">repo<span class="arrow">&nearr;</span></a>
+          <a href="https://youtu.be/3dnE2oHW1Zc" target="_blank" rel="noopener">demo<span class="arrow">&nearr;</span></a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">
+            <a href="https://github.com/Nishant-ZFYII/rob6323_go2_project" target="_blank" rel="noopener">
+              Unitree Go2 Quadruped RL <span class="arrow">&rarr; repo</span>
+            </a>
+          </h3>
+          <span class="project-label">PPO &middot; Isaac Lab &middot; AWS HPC</span>
+        </div>
+        <p class="project-desc">
+          I trained a Unitree Go2 walking policy at 4096 parallel environments on the NYU AWS HPC ParallelCluster I co-architected upstream &mdash; using the infrastructure I helped build to train downstream research. Reward shaping with action-rate penalties on first and second derivatives, an explicit PD controller replacing the implicit actuator, a Raibert heuristic gait clock, and a stiction-plus-viscous actuator friction model randomized per episode. Honestly documented one reward term that silently zeroed; the policy still learned a stable trot.
+        </p>
+        <div class="project-result">
+          <span class="result-label">Headline</span>Lin vel tracking 88.0 vs course target 48 &middot; sim-to-real: 1 min walking on first physical deployment
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Nishant-ZFYII/rob6323_go2_project" target="_blank" rel="noopener">repo<span class="arrow">&nearr;</span></a>
+        </div>
+      </article>
+
+      <article class="project">
+        <div class="project-head">
+          <h3 class="project-title">
+            <a href="https://github.com/Nishant-ZFYII/AI_ML_Quants_VIP" target="_blank" rel="noopener">
+              Multimodal Commodity Forecasting <span class="arrow">&rarr; repo</span>
+            </a>
+          </h3>
+          <span class="project-label">NYU Quantum Geometric Intelligence Lab</span>
+        </div>
+        <p class="project-desc">
+          Two semesters in Prof. Aboussalah&rsquo;s lab. I co-authored a 5-author survey on deep learning for commodity price forecasting; my sections covered data sourcing, feature engineering (continuous futures, stationarity, lag selection via differential evolution), and gradient-flow analysis showing how attention mitigates vanishing gradients. In semester two I pivoted from regression to buy/sell/hold classification and expanded the input space from FRED-MD macros to incorporate FinBERT NLP sentiment and Google Earth Engine NDVI signals over wheat-growing regions.
+        </p>
+        <div class="project-result">
+          <span class="result-label">Headline</span>5-author survey co-authored &middot; multimodal input space &middot; leakage-free time-series CV
+        </div>
+        <div class="project-links">
+          <a href="https://github.com/Nishant-ZFYII/AI_ML_Quants_VIP" target="_blank" rel="noopener">repo<span class="arrow">&nearr;</span></a>
+        </div>
+      </article>
+    </section>
+
+    <!-- PUBLICATIONS -->
+    <section id="publications">
+      <h2>Publications</h2>
+
+      <article class="pub">
+        <div class="pub-title">
+          <a href="https://arxiv.org/abs/2603.28890" target="_blank" rel="noopener">Bootstrap Perception Under Hardware Depth Failure for Indoor Robot Navigation</a>
+        </div>
+        <div class="pub-meta">
+          Pushparaju, N., Mattam, V., Arab, A. &middot; arXiv 2603.28890 &middot; <span class="accent">Under peer review at IEEE CASE 2026 / RA-L</span>
+        </div>
+        <div class="pub-desc">
+          First-author preprint. Self-referential perception architecture: a failing time-of-flight sensor&rsquo;s surviving valid pixels calibrate the learned monocular depth that fills its gaps.
+        </div>
+      </article>
+
+      <article class="pub">
+        <div class="pub-title">
+          <a href="https://github.com/Nishant-ZFYII/AI_ML_Quants_VIP/blob/main/Survey_of_Commodity_Price_Forecasting%20(2).pdf" target="_blank" rel="noopener">Survey of Commodity Price Forecasting</a>
+        </div>
+        <div class="pub-meta">
+          NYU Quantum Geometric Intelligence Lab, 2025 &middot; Internal lab deliverable
+        </div>
+        <div class="pub-desc">
+          Lab survey on deep learning methods for commodity price forecasting, conducted under Prof. Amine Mohamed Aboussalah, NYU Finance and Risk Engineering. Authorship not yet finalized.
+        </div>
+      </article>
+    </section>
+
+    <!-- OPEN SOURCE -->
+    <section id="open-source">
+      <h2>Open Source</h2>
+
+      <article class="pub">
+        <div class="pub-title">
+          <a href="https://github.com/openvinotoolkit/openvino/pulls?q=is%3Apr+author%3ANishant-ZFYII" target="_blank" rel="noopener">OpenVINO &mdash; Intel&rsquo;s production AI inference toolkit</a>
+        </div>
+        <div class="pub-meta">3 merged PRs across C&#x202F;+&#x202F;+, Node.js, and Python &middot; ~10 in flight</div>
+        <div class="pub-desc">
+          Contributions include the <code>import_model(tensor)</code> JavaScript API addition and the <code>segment_mean_csr</code> converter implementation. Production-OSS contribution discipline: review cycles, contribution guidelines, semantic versioning.
+        </div>
+      </article>
+    </section>
+
+    <!-- STACK -->
+    <section id="stack">
+      <h2>Stack</h2>
+      <div class="prose">
+        <p>
+          <strong>Languages:</strong> <code>C++17</code> <code>Python&nbsp;3</code> <code>C</code> <code>MATLAB</code> <code>JavaScript</code> <code>SQL</code> <code>Bash</code>
+        </p>
+        <p>
+          <strong>Robotics &amp; perception:</strong> <code>ROS&nbsp;2 Humble/Jazzy</code> <code>Nav2</code> <code>SLAM&nbsp;Toolbox</code> <code>robot_localization&nbsp;EKF</code> <code>Gazebo</code> <code>Isaac&nbsp;Lab</code> <code>KISS-ICP</code> <code>SuperPoint/SuperGlue</code> <code>CosPlace</code> <code>ORB-SLAM3</code> <code>MPPI</code>
+        </p>
+        <p>
+          <strong>Machine learning:</strong> <code>PyTorch</code> <code>TensorFlow</code> <code>PPO</code> <code>knowledge distillation</code> <code>EfficientViT</code> <code>FinBERT</code> <code>attention mechanisms</code> <code>leakage-free time-series&nbsp;CV</code>
+        </p>
+        <p>
+          <strong>Edge ML &amp; inference:</strong> <code>TensorRT FP16/INT8</code> <code>ONNX</code> <code>OpenVINO (3&nbsp;merged&nbsp;PRs)</code> <code>Apptainer/Singularity</code> <code>Jetson Orin Nano</code>
+        </p>
+        <p>
+          <strong>Embedded &amp; firmware:</strong> <code>Parallax Propeller P8X32A multi-cog&nbsp;C</code> <code>Arduino Nano 33 BLE Sense</code> <code>ESP32-WROOM-32</code> <code>Raspberry&nbsp;Pi&nbsp;5</code> <code>NVIDIA GPU clusters</code>
+        </p>
+        <p>
+          <strong>Cloud &amp; HPC:</strong> <code>AWS ParallelCluster</code> <code>CloudFormation</code> <code>Slurm</code> <code>FSx for Lustre</code> <code>Cloudflare Tunnels</code>
+        </p>
+        <p>
+          <strong>Math &amp; optimization:</strong> <code>Eigen3</code> <code>CVXPY</code> <code>qpSWIFT</code> <code>OSQP</code> <code>Distributed Simplex</code> <code>Control Barrier Functions</code> <code>Sequential Convex MPC</code>
+        </p>
+      </div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline">
+      <h2>Timeline</h2>
+
+      <div class="timeline-row">
+        <div class="timeline-date">2024&ndash;2026</div>
+        <div class="timeline-content">
+          <h3>MS Robotics, NYU Tandon</h3>
+          <p>MS Mechatronics, Robotics, and Automation Engineering. MS project advisor: Prof. Aliasghar Arab (Bell Labs / NYU MAE / CCNY). Bell Labs&ndash;sponsored research on bootstrap perception under hardware depth failure, currently under peer review at IEEE CASE 2026 / RA-L. Co-architected NYU&rsquo;s AWS ParallelCluster HPC infrastructure under Stratos Efstathiadis (NYU IT RTS) and Shenglong Wang.</p>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-date">2025&ndash;2026</div>
+        <div class="timeline-content">
+          <h3>Quantum Geometric Intelligence Lab (VIP)</h3>
+          <p>Researcher under Prof. Amine Mohamed Aboussalah (NYU FRE). Co-authored a 5-author survey on commodity price forecasting; pivoted in semester two to multimodal feature fusion combining FRED-MD macros, FinBERT NLP sentiment, and Google Earth Engine NDVI on wheat futures.</p>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-date">2021&ndash;2023</div>
+        <div class="timeline-content">
+          <h3>Programmer Analyst Trainee, Cognizant (Sanofi)</h3>
+          <p>1 year 8 months building and operating multi-region ETL pipelines (APAC, EMEA, AMER) on a global pharmaceutical client. Delivered analyses to Sanofi senior leadership; reports informed quarterly business decisions across three continents. Informatica PowerCenter, Oracle, Cognos BI on multi-billion-row tables under strict SLAs. The deployment-engineer foundation under everything I&rsquo;ve built since.</p>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-date">2020&ndash;2021</div>
+        <div class="timeline-content">
+          <h3>B.Tech project &middot; RWTH Aachen ITA</h3>
+          <p>Final-year project on industrial pick-and-place automation for limp denim handling, in collaboration with the Institut f&uuml;r Textiltechnik at RWTH Aachen. KUKA KR-6 with a Schmalz high-flow vacuum gripper; KRL programming; KUKA Sim Pro and RoboDK offline programming.</p>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-date">2019</div>
+        <div class="timeline-content">
+          <h3>Robotics Engineer Intern, IIT Kanpur</h3>
+          <p>2-month iSMRITI research internship on a self-driving car prototype. YOLOv3 detection, Kalman filter tracking, PID navigation and steering. Awarded 3rd Best Project among the internship cohort.</p>
+        </div>
+      </div>
+
+      <div class="timeline-row">
+        <div class="timeline-date">2017&ndash;2021</div>
+        <div class="timeline-content">
+          <h3>B.Tech Mechatronics, SRM Institute of Science and Technology</h3>
+          <p>Bachelor&rsquo;s in Mechatronics, Robotics, and Automation Engineering.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT (footer-style) -->
+    <footer>
+      <span>&copy; 2026 Nishant Pushparaju</span>
+      <span>
+        <a href="mailto:nishantpushparaju@gmail.com">email</a>
+        &nbsp;&middot;&nbsp;
+        <a href="https://github.com/Nishant-ZFYII" target="_blank" rel="noopener">github</a>
+        &nbsp;&middot;&nbsp;
+        <a href="https://www.linkedin.com/in/nishant-pushparaju-857695188/" target="_blank" rel="noopener">linkedin</a>
+        &nbsp;&middot;&nbsp;
+        <a href="https://arxiv.org/abs/2603.28890" target="_blank" rel="noopener">arxiv</a>
+      </span>
+    </footer>
+
+  </main>
+  </div>
+</body>
+</html>
